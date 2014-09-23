@@ -15,7 +15,7 @@
 
 Name:           xrootd-python
 Version:        0.1.3
-Release:        2.CERN%{?dist}
+Release:        3.CERN%{?dist}
 License:        GPL3
 Summary:        Python bindings for XRootD
 Group:          Development/Tools
