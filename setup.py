@@ -26,6 +26,7 @@ for dirname, dirnames, filenames in walk('src'):
 
 p = subprocess.Popen(["./genversion.sh"], stdout=subprocess.PIPE)
 version, err = p.communicate()
+version = version.strip()
 print version
 
 setup( name             = 'pyxrootd',
