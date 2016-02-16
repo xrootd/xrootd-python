@@ -1,6 +1,8 @@
+import os
+from os import getenv, walk, path
+
 from distutils.core import setup, Extension
 from distutils import sysconfig
-from os import getenv, walk, path
 import subprocess
 
 # Remove the "-Wstrict-prototypes" compiler option, which isn't valid for C++.
@@ -17,15 +19,19 @@ print 'XRootD include dir:', xrdincdir
 sources = list()
 depends = list()
 
-for dirname, dirnames, filenames in walk('src'):
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+for dirname, dirnames, filenames in walk(os.path.join(here, 'src')):
   for filename in filenames:
     if filename.endswith('.cc'):
       sources.append(path.join(dirname, filename))
     elif filename.endswith('.hh'):
       depends.append(path.join(dirname, filename))
 
-p = subprocess.Popen(["./genversion.sh"], stdout=subprocess.PIPE)
+p = subprocess.Popen([os.path.join(here, 'genversion.sh'), here], stdout=subprocess.PIPE)
 version, err = p.communicate()
+version = version.strip()
 print version
 
 setup( name             = 'pyxrootd',
@@ -37,9 +43,9 @@ setup( name             = 'pyxrootd',
        description      = "XRootD Python bindings",
        long_description = "XRootD Python bindings",
        packages         = ['pyxrootd', 'XRootD', 'XRootD.client'],
-       package_dir      = {'pyxrootd'     : 'src',
-                           'XRootD'       : 'libs',
-                           'XRootD.client': 'libs/client'},
+       package_dir      = {'pyxrootd'     : os.path.join(here, 'src'),
+                           'XRootD'       : os.path.join(here, 'libs'),
+                           'XRootD.client': os.path.join(here, 'libs/client')},
        ext_modules      = [
            Extension(
                'pyxrootd.client',
