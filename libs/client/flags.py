@@ -18,7 +18,7 @@
 
 def enum(**enums):
   """Build the equivalent of a C++ enum"""
-  reverse = dict((value, key) for key, value in enums.iteritems())
+  reverse = dict((value, key) for key, value in iter(enums.items()))
   enums['reverse_mapping'] = reverse
   return type('Enum', (), enums)
 

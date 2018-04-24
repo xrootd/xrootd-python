@@ -76,11 +76,11 @@ namespace PyXRootD
   static PyMethodDef CopyProcessMethods[] =
   {
     { "add_job",
-       (PyCFunction) PyXRootD::CopyProcess::AddJob,  METH_KEYWORDS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::AddJob,  METH_VARARGS, NULL },
     { "prepare",
-       (PyCFunction) PyXRootD::CopyProcess::Prepare, METH_KEYWORDS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::Prepare, METH_VARARGS, NULL },
     { "run",
-       (PyCFunction) PyXRootD::CopyProcess::Run,     METH_KEYWORDS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::Run,     METH_VARARGS, NULL },
 
     { NULL } /* Sentinel */
   };

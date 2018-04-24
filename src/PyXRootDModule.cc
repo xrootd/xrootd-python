@@ -46,8 +46,8 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   //! Module initialization function
   //----------------------------------------------------------------------------
-  //PyMODINIT_FUNC PyInit_client( void )
-  PyMODINIT_FUNC initclient( void )
+  PyMODINIT_FUNC PyInit_client( void )
+  //PyMODINIT_FUNC initclient( void )
   {
     // Ensure GIL state is initialized
     Py_Initialize();
@@ -92,5 +92,6 @@ namespace PyXRootD
     PyModule_AddObject( ClientModule, "File", (PyObject *) &FileType );
     PyModule_AddObject( ClientModule, "URL", (PyObject *) &URLType );
     PyModule_AddObject( ClientModule, "CopyProcess", (PyObject *) &CopyProcessType );
+    return ClientModule;
   }
 }

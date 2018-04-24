@@ -23,7 +23,7 @@ class Struct(object):
       self.__dict__.update(**entries)
   def __repr__(self):
     return '<%s>' % str(', '.join('%s: %s' % (k, repr(v))
-                                  for (k, v) in self.__dict__.iteritems()))
+                                  for (k, v) in iter(self.__dict__.items())))
 
 class LocationInfo(Struct):
   """Path location information (a list of discovered file locations).
