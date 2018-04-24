@@ -32,6 +32,10 @@
 
 #include <deque>
 
+#if PY_MAJOR_VERSION >=3
+#  define Py_TPFLAGS_HAVE_ITER 0
+#endif
+
 namespace PyXRootD
 {
   //----------------------------------------------------------------------------
@@ -98,7 +102,7 @@ namespace PyXRootD
     delete self->file;
     delete self->partial;
     delete self->surplus;
-    self->ob_type->tp_free( (PyObject*) self );
+    Py_TYPE(self)->tp_free( (PyObject*) self );
   }
 
   //----------------------------------------------------------------------------
@@ -128,7 +132,7 @@ namespace PyXRootD
     //--------------------------------------------------------------------------
     // Raise StopIteration if the line we just read is empty
     //--------------------------------------------------------------------------
-    if ( PyString_Size( line ) == 0 ) {
+    if ( PyUnicode_GET_SIZE( line ) == 0 ) {
       PyErr_SetNone( PyExc_StopIteration );
       return NULL;
     }
@@ -214,8 +218,7 @@ namespace PyXRootD
   //! File binding type object
   //----------------------------------------------------------------------------
   static PyTypeObject FileType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                                          /* ob_size */
+    PyVarObject_HEAD_INIT(NULL, 0)
     "pyxrootd.File",                            /* tp_name */
     sizeof(File),                               /* tp_basicsize */
     0,                                          /* tp_itemsize */

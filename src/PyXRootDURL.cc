@@ -56,12 +56,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetProtocol( URL *self, PyObject *protocol, void *closure )
   {
-    if ( !PyString_Check( protocol ) ) {
+    if ( !PyUnicode_Check( protocol ) ) {
       PyErr_SetString( PyExc_TypeError, "protocol must be string" );
       return -1;
     }
 
-    self->url->SetProtocol( std::string ( PyString_AsString( protocol ) ) );
+    self->url->SetProtocol( std::string ( PyUnicode_AsUTF8( protocol ) ) );
     return 0;
   }
 
@@ -78,12 +78,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetUserName( URL *self, PyObject *username, void *closure )
   {
-    if ( !PyString_Check( username ) ) {
+    if ( !PyUnicode_Check( username ) ) {
       PyErr_SetString( PyExc_TypeError, "username must be string" );
       return -1;
     }
 
-    self->url->SetUserName( std::string( PyString_AsString( username ) ) );
+    self->url->SetUserName( std::string( PyUnicode_AsUTF8( username ) ) );
     return 0;
   }
 
@@ -100,12 +100,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetPassword( URL *self, PyObject *password, void *closure )
   {
-    if ( !PyString_Check( password ) ) {
+    if ( !PyUnicode_Check( password ) ) {
       PyErr_SetString( PyExc_TypeError, "password must be string" );
       return -1;
     }
 
-    self->url->SetPassword( std::string( PyString_AsString( password ) ) );
+    self->url->SetPassword( std::string( PyUnicode_AsUTF8( password ) ) );
     return 0;
   }
 
@@ -122,12 +122,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetHostName( URL *self, PyObject *hostname, void *closure )
   {
-    if ( !PyString_Check( hostname ) ) {
+    if ( !PyUnicode_Check( hostname ) ) {
       PyErr_SetString( PyExc_TypeError, "hostname must be string" );
       return -1;
     }
 
-    self->url->SetHostName( std::string( PyString_AsString( hostname ) ) );
+    self->url->SetHostName( std::string( PyUnicode_AsUTF8( hostname ) ) );
     return 0;
   }
 
@@ -136,7 +136,7 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   PyObject* URL::GetPort( URL *self, void *closure )
   {
-    return PyInt_FromLong( self->url->GetPort() );
+    return PyLong_FromLong( self->url->GetPort() );
   }
 
   //----------------------------------------------------------------------------
@@ -144,12 +144,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetPort( URL *self, PyObject *port, void *closure )
   {
-    if ( !PyInt_Check( port ) ) {
+    if ( !PyLong_Check( port ) ) {
       PyErr_SetString( PyExc_TypeError, "port must be int" );
       return -1;
     }
 
-    self->url->SetPort( PyInt_AsLong( port ) );
+    self->url->SetPort( PyLong_AsLong( port ) );
     return 0;
   }
 
@@ -166,12 +166,12 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   int URL::SetPath( URL *self, PyObject *path, void *closure )
   {
-    if ( !PyString_Check( path ) ) {
+    if ( !PyUnicode_Check( path ) ) {
       PyErr_SetString( PyExc_TypeError, "path must be string" );
       return -1;
     }
 
-    self->url->SetPath( std::string( PyString_AsString( path ) ) );
+    self->url->SetPath( std::string( PyUnicode_AsUTF8( path ) ) );
     return 0;
   }
 

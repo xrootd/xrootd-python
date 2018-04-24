@@ -85,7 +85,7 @@ namespace PyXRootD
 
     else {
       self->currentOffset += self->chunksize;
-      pychunk = PyString_FromStringAndSize( (const char*) chunk->GetBuffer(),
+      pychunk = PyUnicode_FromStringAndSize( (const char*) chunk->GetBuffer(),
                                                           chunk->GetSize() );
     }
 
@@ -97,8 +97,7 @@ namespace PyXRootD
   //! ChunkIterator type structure
   //----------------------------------------------------------------------------
   static PyTypeObject ChunkIteratorType = {
-      PyObject_HEAD_INIT(NULL)
-      0,                                          /* ob_size */
+      PyVarObject_HEAD_INIT(NULL, 0)
       "client.File.ChunkIterator",                /* tp_name */
       sizeof(ChunkIterator),                      /* tp_basicsize */
       0,                                          /* tp_itemsize */

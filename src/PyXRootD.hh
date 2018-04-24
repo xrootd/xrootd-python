@@ -34,7 +34,7 @@
 #include "structmember.h"
 
 #if PY_MINOR_VERSION <= 5
-#define PyUnicode_FromString PyString_FromString
+#define PyUnicode_FromString PyUnicode_FromString
 #endif
 
 #define async( func )    \

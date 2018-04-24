@@ -46,6 +46,7 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   //! Module initialization function
   //----------------------------------------------------------------------------
+  //PyMODINIT_FUNC PyInit_client( void )
   PyMODINIT_FUNC initclient( void )
   {
     // Ensure GIL state is initialized
@@ -55,25 +56,36 @@ namespace PyXRootD
     }
 
     FileSystemType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &FileSystemType ) < 0 ) return;
+    if ( PyType_Ready( &FileSystemType ) < 0 ) return 0;
     Py_INCREF( &FileSystemType );
 
     FileType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &FileType ) < 0 ) return;
+    if ( PyType_Ready( &FileType ) < 0 ) return 0;
     Py_INCREF( &FileType );
 
     URLType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &URLType ) < 0 ) return;
+    if ( PyType_Ready( &URLType ) < 0 ) return 0;
     Py_INCREF( &URLType );
 
     CopyProcessType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &CopyProcessType ) < 0 ) return;
+    if ( PyType_Ready( &CopyProcessType ) < 0 ) return 0;
     Py_INCREF( &CopyProcessType );
 
-    ClientModule = Py_InitModule3("client", module_methods, client_module_doc);
+    static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "client", //m_name
+        client_module_doc, //m_doc
+        -1, //m_name
+        module_methods, //m_functions
+        NULL, //m_reload
+        NULL, //m_traverse
+        NULL, //m_clear
+        NULL, //m_free
+    };
+    ClientModule = PyModule_Create(&moduledef);
 
     if (ClientModule == NULL) {
-      return;
+      return 0;
     }
 
     PyModule_AddObject( ClientModule, "FileSystem", (PyObject *) &FileSystemType );

@@ -11,8 +11,8 @@ cfg_vars["OPT"] = " ".join( flag for flag in opt.split() if flag != '-Wstrict-pr
 xrdlibdir = getenv( 'XRD_LIBDIR' ) or '/usr/lib'
 xrdincdir = getenv( 'XRD_INCDIR' ) or '/usr/include/xrootd'
 
-print 'XRootD library dir:', xrdlibdir
-print 'XRootD include dir:', xrdincdir
+print('XRootD library dir:', xrdlibdir)
+print('XRootD include dir:', xrdincdir)
 
 sources = list()
 depends = list()
@@ -26,8 +26,11 @@ for dirname, dirnames, filenames in walk('src'):
 
 p = subprocess.Popen(["./genversion.sh"], stdout=subprocess.PIPE)
 version, err = p.communicate()
-print version
-
+print(version)
+print(sources)
+print(depends)
+print(version)
+version = 'v0.3.0'
 setup( name             = 'pyxrootd',
        version          = version,
        author           = 'XRootD Developers',
@@ -52,6 +55,5 @@ setup( name             = 'pyxrootd',
                )
            ]
        )
-
 # Make the docs
 # call(["make", "-C", "docs", "html"])
