@@ -9,9 +9,10 @@ Python bindings for XRootD
 Requirements
 ------------
 
-* Python 2.4 or later
-    * Works on Python 2.4 -> 2.7
-    * Python 3 not yet supported (coming soon)
+* Python 3 
+    * Python 3 not tested
+    * In setup script the version is hard coded!
+    * only locate is tested and seems to work
 * New `XRootD <http://xrootd.org/dload.html>`_ client + development headers
     * `xrootd-client, xrootd-client-devel` packages
     * Version 3.3.3 or above required
@@ -40,11 +41,11 @@ script to install.
 To install in your `home directory
 <http://www.python.org/dev/peps/pep-0370/>`_::
 
-  $ python setup.py install --user
+  $ python3 setup.py install --user
 
 To install system-wide (requires root privileges)::
 
-  $ sudo python setup.py install
+  $ sudo python3 setup.py install
 
 Post-installation
 -----------------
