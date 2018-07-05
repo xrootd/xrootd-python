@@ -73,43 +73,43 @@ namespace PyXRootD
   static PyMethodDef FileSystemMethods[] =
     {
       { "copy",
-          (PyCFunction) PyXRootD::FileSystem::Copy,       METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Copy,       METH_KEYWORDS, NULL },
       { "locate",
-          (PyCFunction) PyXRootD::FileSystem::Locate,     METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Locate,     METH_KEYWORDS, NULL },
       { "deeplocate",
-          (PyCFunction) PyXRootD::FileSystem::DeepLocate, METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::DeepLocate, METH_KEYWORDS, NULL },
       { "mv",
-          (PyCFunction) PyXRootD::FileSystem::Mv,         METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Mv,         METH_KEYWORDS, NULL },
       { "query",
-          (PyCFunction) PyXRootD::FileSystem::Query,      METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Query,      METH_KEYWORDS, NULL },
       { "truncate",
-          (PyCFunction) PyXRootD::FileSystem::Truncate,   METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Truncate,   METH_KEYWORDS, NULL },
       { "rm",
-          (PyCFunction) PyXRootD::FileSystem::Rm,         METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Rm,         METH_KEYWORDS, NULL },
       { "mkdir",
-          (PyCFunction) PyXRootD::FileSystem::MkDir,      METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::MkDir,      METH_KEYWORDS, NULL },
       { "rmdir",
-          (PyCFunction) PyXRootD::FileSystem::RmDir,      METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::RmDir,      METH_KEYWORDS, NULL },
       { "chmod",
-          (PyCFunction) PyXRootD::FileSystem::ChMod,      METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::ChMod,      METH_KEYWORDS, NULL },
       { "ping",
-          (PyCFunction) PyXRootD::FileSystem::Ping,       METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Ping,       METH_KEYWORDS, NULL },
       { "stat",
-          (PyCFunction) PyXRootD::FileSystem::Stat,       METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Stat,       METH_KEYWORDS, NULL },
       { "statvfs",
-          (PyCFunction) PyXRootD::FileSystem::StatVFS,    METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::StatVFS,    METH_KEYWORDS, NULL },
       { "protocol",
-          (PyCFunction) PyXRootD::FileSystem::Protocol,   METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Protocol,   METH_KEYWORDS, NULL },
       { "dirlist",
-          (PyCFunction) PyXRootD::FileSystem::DirList,    METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::DirList,    METH_KEYWORDS, NULL },
       { "sendinfo",
-          (PyCFunction) PyXRootD::FileSystem::SendInfo,   METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::SendInfo,   METH_KEYWORDS, NULL },
       { "prepare",
-          (PyCFunction) PyXRootD::FileSystem::Prepare,    METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::Prepare,    METH_KEYWORDS, NULL },
       { "get_property",
-          (PyCFunction) PyXRootD::FileSystem::GetProperty, METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::GetProperty, METH_KEYWORDS, NULL },
       { "set_property",
-          (PyCFunction) PyXRootD::FileSystem::SetProperty, METH_VARARGS, NULL },
+          (PyCFunction) PyXRootD::FileSystem::SetProperty, METH_KEYWORDS, NULL },
       { NULL } /* Sentinel */
     };
 
@@ -134,7 +134,11 @@ namespace PyXRootD
   {
     delete self->filesystem;
     Py_XDECREF( self->url );
+#if PY_MAJOR_VERSION >= 3
     Py_TYPE(self)->tp_free( (PyObject*) self );
+#else
+    self->ob_type->tp_free( (PyObject*) self );
+#endif
   }
 
   //----------------------------------------------------------------------------
@@ -150,8 +154,13 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   //! FileSystem binding type object
   //----------------------------------------------------------------------------
-  static PyTypeObject FileSystemType =
-    { PyVarObject_HEAD_INIT(NULL, 0)
+  static PyTypeObject FileSystemType = {
+#if PY_MAJOR_VERSION >= 3
+      PyVarObject_HEAD_INIT(NULL, 0)
+#else
+      PyObject_HEAD_INIT(NULL)
+      0,                                          /* ob_size */
+#endif
     "pyxrootd.FileSystem",                      /* tp_name */
     sizeof(FileSystem),                         /* tp_basicsize */
     0,                                          /* tp_itemsize */

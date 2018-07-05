@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with XRootD.  If not, see <http:#www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
+import six
 
 def enum(**enums):
   """Build the equivalent of a C++ enum"""
-  reverse = dict((value, key) for key, value in iter(enums.items()))
+  reverse = dict((value, key) for key, value in six.iteritems(enums))
   enums['reverse_mapping'] = reverse
   return type('Enum', (), enums)
 

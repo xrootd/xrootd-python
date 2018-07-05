@@ -16,6 +16,7 @@
 # along with XRootD.  If not, see <http:#www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from XRootD.client.url import URL
+import six
 
 class Struct(object):
   """Convert a dict into an object by adding each dict entry to __dict__"""
@@ -23,7 +24,7 @@ class Struct(object):
       self.__dict__.update(**entries)
   def __repr__(self):
     return '<%s>' % str(', '.join('%s: %s' % (k, repr(v))
-                                  for (k, v) in iter(self.__dict__.items())))
+                                  for (k, v) in six.iteritems(self.__dict__)))
 
 class LocationInfo(Struct):
   """Path location information (a list of discovered file locations).

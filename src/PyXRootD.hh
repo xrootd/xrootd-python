@@ -33,8 +33,23 @@
 #include <string>
 #include "structmember.h"
 
+#if PY_MAJOR_VERSION >= 3
+#define IS_PY3K
+#define PyString_AsString PyUnicode_AsUTF8
+#define PyString_Check PyUnicode_Check
+#define PyInt_FromLong PyLong_FromLong
+#define PyString_FromStringAndSize PyUnicode_FromStringAndSize
+#define METH_KEYWORDS METH_VARARGS
+#define PyString_Size PyUnicode_GET_SIZE
+#define PyInt_FromLong PyLong_FromLong
+#define PyInt_Check PyLong_Check
+#define PyInt_AsLong PyLong_AsLong
+#define initclient PyInit_client
+#define PyString_FromString PyUnicode_FromString
+#else
 #if PY_MINOR_VERSION <= 5
-#define PyUnicode_FromString PyUnicode_FromString
+#define PyUnicode_FromString PyString_FromString
+#endif
 #endif
 
 #define async( func )    \

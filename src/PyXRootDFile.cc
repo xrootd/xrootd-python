@@ -218,7 +218,7 @@ namespace PyXRootD
     if ( !self->surplus->empty() )
     {
       XrdCl::Buffer *surplus = self->surplus->front();
-      pyline = PyUnicode_FromStringAndSize( surplus->GetBuffer(),
+      pyline = PyString_FromStringAndSize( surplus->GetBuffer(),
                                            surplus->GetSize() );
       self->surplus->pop_front();
       delete surplus;
@@ -250,14 +250,14 @@ namespace PyXRootD
       //------------------------------------------------------------------------
       if ( self->partial->GetSize() == 0 )
       {
-        return PyUnicode_FromString( "" );
+        return PyString_FromString( "" );
       }
       //------------------------------------------------------------------------
       // We can return the partial line
       //------------------------------------------------------------------------
       else
       {
-        pyline = PyUnicode_FromStringAndSize( self->partial->GetBuffer(),
+        pyline = PyString_FromStringAndSize( self->partial->GetBuffer(),
                                              self->partial->GetSize() );
         self->partial->Free();
         return pyline;
@@ -294,7 +294,7 @@ namespace PyXRootD
             {
               self->partial->Append( self->chunk->GetBuffer(),
                                      lastNewlineIndex + 1 );
-              pyline = PyUnicode_FromStringAndSize( self->partial->GetBuffer(),
+              pyline = PyString_FromStringAndSize( self->partial->GetBuffer(),
                                                    self->partial->GetSize() );
               self->partial->Free();
             }
@@ -304,7 +304,7 @@ namespace PyXRootD
             //--------------------------------------------------------------------
             else
             {
-              pyline = PyUnicode_FromStringAndSize( self->chunk->GetBuffer(),
+              pyline = PyString_FromStringAndSize( self->chunk->GetBuffer(),
                                                    lastNewlineIndex + 1 );
             }
           }
@@ -389,7 +389,7 @@ namespace PyXRootD
     for (;;)
     {
       line = self->ReadLine( self, args, kwds );
-      if ( !line || PyUnicode_GET_SIZE( line ) == 0 ) {
+      if ( !line || PyString_Size( line ) == 0 ) {
         break;
       }
       PyList_Append( lines, line );

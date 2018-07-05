@@ -67,7 +67,11 @@ namespace PyXRootD
   {
     delete self->process;
     delete self->results;
+#if PY_MAJOR_VERSION >= 3
     Py_TYPE(self)->tp_free( (PyObject*) self );
+#else
+    self->ob_type->tp_free( (PyObject*) self );
+#endif
   }
 
   //----------------------------------------------------------------------------
@@ -76,11 +80,11 @@ namespace PyXRootD
   static PyMethodDef CopyProcessMethods[] =
   {
     { "add_job",
-       (PyCFunction) PyXRootD::CopyProcess::AddJob,  METH_VARARGS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::AddJob,  METH_KEYWORDS, NULL },
     { "prepare",
-       (PyCFunction) PyXRootD::CopyProcess::Prepare, METH_VARARGS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::Prepare, METH_KEYWORDS, NULL },
     { "run",
-       (PyCFunction) PyXRootD::CopyProcess::Run,     METH_VARARGS, NULL },
+       (PyCFunction) PyXRootD::CopyProcess::Run,     METH_KEYWORDS, NULL },
 
     { NULL } /* Sentinel */
   };
@@ -97,7 +101,12 @@ namespace PyXRootD
   //! CopyProcess binding type object
   //----------------------------------------------------------------------------
   static PyTypeObject CopyProcessType = {
-    PyVarObject_HEAD_INIT(NULL, 0)
+#if PY_MAJOR_VERSION >= 3
+     PyVarObject_HEAD_INIT(NULL, 0)
+#else
+     PyObject_HEAD_INIT(NULL)
+     0,                                          /* ob_size */
+#endif
     "pyxrootd.CopyProcess",                     /* tp_name */
     sizeof(CopyProcess),                        /* tp_basicsize */
     0,                                          /* tp_itemsize */

@@ -46,8 +46,11 @@ namespace PyXRootD
   //----------------------------------------------------------------------------
   //! Module initialization function
   //----------------------------------------------------------------------------
+#if PY_MAJOR_VERSION >= 3
   PyMODINIT_FUNC PyInit_client( void )
-  //PyMODINIT_FUNC initclient( void )
+#else
+  PyMODINIT_FUNC initclient( void )
+#endif
   {
     // Ensure GIL state is initialized
     Py_Initialize();
@@ -56,21 +59,42 @@ namespace PyXRootD
     }
 
     FileSystemType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &FileSystemType ) < 0 ) return 0;
-    Py_INCREF( &FileSystemType );
+    if ( PyType_Ready( &FileSystemType ) < 0 )
+#if PY_MAJOR_VERSION >= 3
+            return 0;
+#else
+	    return;
+#endif
+     Py_INCREF( &FileSystemType );
 
     FileType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &FileType ) < 0 ) return 0;
+    if ( PyType_Ready( &FileType ) < 0 )
+#if PY_MAJOR_VERSION >= 3
+            return 0;
+#else
+            return;
+#endif 
     Py_INCREF( &FileType );
 
     URLType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &URLType ) < 0 ) return 0;
+    if ( PyType_Ready( &URLType ) < 0 )
+#if PY_MAJOR_VERSION >= 3
+            return 0;
+#else
+            return;
+#endif 
     Py_INCREF( &URLType );
 
     CopyProcessType.tp_new = PyType_GenericNew;
-    if ( PyType_Ready( &CopyProcessType ) < 0 ) return 0;
+    if ( PyType_Ready( &CopyProcessType ) < 0 ) 
+#if PY_MAJOR_VERSION >= 3
+            return 0;
+#else
+            return;
+#endif 
     Py_INCREF( &CopyProcessType );
 
+#if PY_MAJOR_VERSION >= 3
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
         "client", //m_name
@@ -83,15 +107,25 @@ namespace PyXRootD
         NULL, //m_free
     };
     ClientModule = PyModule_Create(&moduledef);
+#else
+    ClientModule = Py_InitModule3("client", module_methods, client_module_doc);
+#endif 
+
 
     if (ClientModule == NULL) {
-      return 0;
+#if PY_MAJOR_VERSION >= 3
+            return 0;
+#else
+            return;
+#endif 
     }
 
     PyModule_AddObject( ClientModule, "FileSystem", (PyObject *) &FileSystemType );
     PyModule_AddObject( ClientModule, "File", (PyObject *) &FileType );
     PyModule_AddObject( ClientModule, "URL", (PyObject *) &URLType );
     PyModule_AddObject( ClientModule, "CopyProcess", (PyObject *) &CopyProcessType );
+#if PY_MAJOR_VERSION >= 3
     return ClientModule;
+#endif
   }
 }

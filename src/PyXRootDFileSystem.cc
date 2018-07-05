@@ -624,7 +624,7 @@ namespace PyXRootD
     for ( int i = 0; i < PyList_Size( pyfiles ); ++i ) {
       pyfile = PyList_GetItem( pyfiles, i );
       if ( !pyfile ) return NULL;
-      file = PyUnicode_AsUTF8( pyfile );
+      file = PyString_AsString( pyfile );
       files.push_back( std::string( file ) );
     }
 
