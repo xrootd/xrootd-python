@@ -11,7 +11,10 @@ Requirements
 
 * Python 2.4 or later
     * Works on Python 2.4 -> 2.7
-    * Python 3 not yet supported (coming soon)
+    * Works on Python 3.5 
+    * Python 3.6 not yet supported 
+    * Python package six is required
+
 * New `XRootD <http://xrootd.org/dload.html>`_ client + development headers
     * `xrootd-client, xrootd-client-devel` packages
     * Version 3.3.3 or above required
