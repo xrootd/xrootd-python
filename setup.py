@@ -46,7 +46,7 @@ setup( name             = 'pyxrootd',
                sources   = sources,
                depends   = depends,
                libraries = ['XrdCl', 'XrdUtils', 'dl'],
-               extra_compile_args = ['-g'],
+               extra_compile_args = ['-g', '-std=c++11'],
                include_dirs = [xrdincdir],
                library_dirs = [xrdlibdir]
                )
