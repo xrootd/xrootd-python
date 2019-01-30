@@ -6,6 +6,13 @@ pyxrootd |buildstatus|
 
 Python bindings for XRootD
 
+Note
+------------
+
+XRootD Python bindings have been integrated into the core XRootD project
+(please have a look at: https://github.com/xrootd/xrootd/tree/master/bindings/python).
+This reposityry is now deprecated.
+
 Requirements
 ------------
 
