@@ -29,7 +29,7 @@ version, err = p.communicate()
 print version
 
 setup( name             = 'pyxrootd',
-       version          = version,
+       version          = version.strip(),
        author           = 'XRootD Developers',
        author_email     = 'xrootd-dev@slac.stanford.edu',
        url              = 'http://xrootd.org',
