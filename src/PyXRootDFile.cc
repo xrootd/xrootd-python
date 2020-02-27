@@ -425,7 +425,7 @@ namespace PyXRootD
   {
     static const char *kwlist[]  = { "offset", "chunksize", NULL };
     uint64_t           offset    = 0;
-    uint32_t           chunksize = 1042 * 1024 * 2; // 2MB
+    uint32_t           chunksize = 1024 * 1024 * 2; // 2MB
     ChunkIterator     *iterator;
 
     if ( !self->file->IsOpen() ) return FileClosedError();
